@@ -2,9 +2,6 @@ package com.poc.fb.fb_poc.ui;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.IntentSender;
-import android.database.Observable;
-import android.location.Address;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,33 +14,23 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.ActivityRecognitionResult;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
-import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.poc.fb.fb_poc.R;
-import com.poc.fb.fb_poc.logic.LocationController;
-import com.poc.fb.fb_poc.utils.AddressToStringFunc;
+import com.poc.fb.fb_poc.logic.GoogleApiLocationController;
 import com.poc.fb.fb_poc.utils.DetectedActivityToString;
 import com.poc.fb.fb_poc.utils.DisplayTextOnViewAction;
 import com.poc.fb.fb_poc.utils.LocationToStringFunc;
 import com.poc.fb.fb_poc.utils.ToMostProbableActivity;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.charmas.android.reactivelocation.ReactiveLocationProvider;
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
-import static com.poc.fb.fb_poc.logic.LocationController.REQUEST_CHECK_SETTINGS;
+import static com.poc.fb.fb_poc.logic.GoogleApiLocationController.REQUEST_CHECK_SETTINGS;
 import static com.poc.fb.fb_poc.utils.UnsubscribeIfPresent.unsubscribe;
 
 /**
@@ -68,7 +55,7 @@ public class LocationFragment extends Fragment{
     private Subscription addressSubscription;
     private Subscription activitySubscription;
     private rx.Observable<String> addressObservable;
-    private LocationController locationController;
+    private GoogleApiLocationController locationController;
 
     @Nullable
     @Override
@@ -78,7 +65,7 @@ public class LocationFragment extends Fragment{
         View view = inflater.inflate(R.layout.location_fragment, null);
         ButterKnife.bind(this, view);
 
-        locationController = new LocationController(getActivity());
+        locationController = new GoogleApiLocationController(getActivity());
         lastKnownLocationObservable = locationController.getLastKnownLocation();
 
         locationUpdatesObservable = locationController.getUpdatesObservable();

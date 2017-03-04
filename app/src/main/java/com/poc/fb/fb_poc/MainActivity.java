@@ -20,8 +20,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.poc.fb.fb_poc.ui.LocationFragment;
-
-import java.util.logging.Logger;
+import com.poc.fb.fb_poc.ui.NativeLocationsFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -144,8 +143,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             Log.d(TAG, "getItem() called with: position = [" + position + "]");
-            if (position == 0) {
-                return new LocationFragment();
+            switch (position) {
+                case 0:
+                    return new LocationFragment();
+                case 1:
+                    return new NativeLocationsFragment();
             }
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).

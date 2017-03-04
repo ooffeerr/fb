@@ -29,6 +29,10 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
 
+    // dagger and it's companions
+    compile "com.google.dagger:dagger:2.9"
+    annotationProcessor "com.google.dagger:dagger-compiler:2.9"
+    provided 'javax.annotation:jsr250-api:1.0'
 
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
@@ -37,6 +41,12 @@ dependencies {
     compile 'pl.charmas.android:android-reactive-location:0.10@aar'
     compile 'com.google.android.gms:play-services-location:9.4.0' //you can use newer GMS version if you need
     compile 'com.google.android.gms:play-services-places:9.4.0'
+
+
+    compile 'com.yahoo.squidb:squidb:3.2.3'
+    compile 'com.yahoo.squidb:squidb-annotations:3.2.3'
+    compile 'com.yahoo.squidb:squidb-android:3.2.3' // For Android projects only
+    annotationProcessor 'com.yahoo.squidb:squidb-processor:3.2.3'
 
     testCompile 'junit:junit:4.12'
 }
