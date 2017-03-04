@@ -19,7 +19,7 @@ public class NativeLocationProvider {
 
     public static final String TAG = "LocationObservable";
 
-    @Inject private LocationManager locationManager;
+    @Inject LocationManager locationManager;
 
     public rx.Observable<Location> getGpsLocationsObservable(Context context, final long minTime, final float minDistance) {
 

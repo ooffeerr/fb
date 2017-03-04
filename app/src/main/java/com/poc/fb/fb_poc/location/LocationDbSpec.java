@@ -3,6 +3,7 @@ package com.poc.fb.fb_poc.location;
 import android.os.Bundle;
 
 import com.yahoo.squidb.annotations.ColumnSpec;
+import com.yahoo.squidb.annotations.PrimaryKey;
 import com.yahoo.squidb.annotations.TableModelSpec;
 
 /**
@@ -10,6 +11,9 @@ import com.yahoo.squidb.annotations.TableModelSpec;
  */
 @TableModelSpec(className = "Location", tableName = "locations")
 public class LocationDbSpec {
+
+    @PrimaryKey
+    long _id;
 
     @ColumnSpec(defaultValue = "Gps", constraints = "NOT NULL")
     String provider;
