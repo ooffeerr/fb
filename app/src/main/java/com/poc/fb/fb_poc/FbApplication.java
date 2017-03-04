@@ -13,13 +13,12 @@ import dagger.Component;
  */
 
 public class FbApplication extends Application {
+
     @Singleton
     @Component(modules = AndroidModule.class)
 
     public interface ApplicationComponent {
         void inject(FbApplication application);
-//        void inject(HomeActivity homeActivity);
-//        void inject(DemoActivity demoActivity);
     }
 
     @Inject  LocationManager locationManager; // for some reason.
