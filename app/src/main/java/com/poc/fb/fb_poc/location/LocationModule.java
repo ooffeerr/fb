@@ -9,6 +9,7 @@ import dagger.Module;
 import dagger.Provides;
 
 import com.poc.fb.fb_poc.FbApplication;
+import com.poc.fb.fb_poc.db.IDatabase;
 import com.poc.fb.fb_poc.db.LocationDatabase;
 import com.poc.fb.fb_poc.logic.ILocationController;
 import com.poc.fb.fb_poc.logic.LocationController;
@@ -30,6 +31,9 @@ public class LocationModule {
         }
 
         @Provides
+        Context provideContext() {return application; }
+
+        @Provides
         @Singleton
         FbApplication provideApplicationContext() {
             return application;
@@ -41,13 +45,13 @@ public class LocationModule {
         }
 
         @Provides @Singleton
-        ILocationController provideLocationController() {
-            return new LocationController(new LocationDatabase(application), providerLocationProvider());
+        ILocationController provideLocationController(LocationController locationController) {
+            return locationController;
         }
 
         @Provides
-        LocationDatabase provideLocationsDatabase() {
-            return new LocationDatabase(application);
+        IDatabase provideLocationsDatabase(LocationDatabase database) {
+            return database;
         }
 
         @Provides @Singleton

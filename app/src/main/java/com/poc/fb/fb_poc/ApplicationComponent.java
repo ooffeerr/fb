@@ -1,9 +1,7 @@
 package com.poc.fb.fb_poc;
 
-import com.poc.fb.fb_poc.db.LocationDbModule;
 import com.poc.fb.fb_poc.location.LocationModule;
 import com.poc.fb.fb_poc.location.NativeLocationProvider;
-import com.poc.fb.fb_poc.logic.LocationController;
 import com.poc.fb.fb_poc.ui.NativeLocationsFragment;
 
 import javax.inject.Singleton;
@@ -19,6 +17,5 @@ import dagger.Component;
 public interface ApplicationComponent {
     void inject(FbApplication application);
     void inject(NativeLocationsFragment fragment);
-    void inject(LocationController controller);
     void inject(NativeLocationProvider provider);
 }

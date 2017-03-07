@@ -5,24 +5,24 @@ import android.content.Context;
 import android.util.Log;
 
 import com.yahoo.squidb.android.AndroidOpenHelper;
-import com.yahoo.squidb.annotations.ColumnSpec;
-import com.yahoo.squidb.annotations.TableModelSpec;
 import com.yahoo.squidb.data.ISQLiteDatabase;
 import com.yahoo.squidb.data.ISQLiteOpenHelper;
 import com.yahoo.squidb.data.SquidDatabase;
-import com.yahoo.squidb.sql.Query;
 import com.yahoo.squidb.sql.Table;
+
+import javax.inject.Inject;
 
 
 /**
- * Stores all detected locations forever.
+ * Squid-DB implementation for location storage.
  */
-public class LocationDatabase extends SquidDatabase {
+public class LocationDatabase extends SquidDatabase implements IDatabase {
 
     private static final int VERSION = 1;
     private static final String TAG = "LocationDatabase";
-    private final Context context;
+    Context context;
 
+    @Inject
     public LocationDatabase(Context context) {
         super();
         this.context = context;
@@ -57,6 +57,7 @@ public class LocationDatabase extends SquidDatabase {
         return VERSION;
     }
 
+    @Override
     public void addLocation(android.location.Location location) {
         Log.d(TAG, "addLocation() called with: location = [" + location + "]");
 

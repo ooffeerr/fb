@@ -3,6 +3,7 @@ package com.poc.fb.fb_poc.logic;
 import android.location.Location;
 import android.util.Log;
 
+import com.poc.fb.fb_poc.db.IDatabase;
 import com.poc.fb.fb_poc.db.LocationDatabase;
 import com.poc.fb.fb_poc.location.ILocationUpdateUIListener;
 import com.poc.fb.fb_poc.location.NativeLocationProvider;
@@ -19,20 +20,17 @@ import rx.Subscriber;
  */
 public class LocationController implements ILocationController {
 
-
     private static final String TAG = "LocationController";
 
     @Inject
-    public LocationController(LocationDatabase locationDatabase, NativeLocationProvider nativeLocationProvider) {
+    public LocationController(IDatabase locationDatabase, NativeLocationProvider nativeLocationProvider) {
         Log.d(TAG, "LocationController() called with: locationDatabase = [" + locationDatabase + "], nativeLocationProvider = [" + nativeLocationProvider + "]");
         this.database = locationDatabase;
         this.nativeLocationProvider = nativeLocationProvider;
     }
 
-    @Inject
-    LocationDatabase database;
+    IDatabase database;
 
-    @Inject
     NativeLocationProvider nativeLocationProvider;
 
     @Override

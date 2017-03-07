@@ -3,7 +3,7 @@ package com.poc.fb.fb_poc;
 import android.app.Application;
 import android.location.LocationManager;
 
-import com.poc.fb.fb_poc.db.LocationDatabase;
+import com.poc.fb.fb_poc.db.IDatabase;
 import com.poc.fb.fb_poc.location.LocationModule;
 import com.poc.fb.fb_poc.logic.ILocationController;
 
@@ -23,7 +23,7 @@ public class FbApplication extends Application {
     ILocationController locationController;
 
     @Inject
-    LocationDatabase database;
+    IDatabase database;
 
 
     private ApplicationComponent component;
