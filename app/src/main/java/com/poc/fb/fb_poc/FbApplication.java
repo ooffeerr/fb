@@ -3,10 +3,11 @@ package com.poc.fb.fb_poc;
 import android.app.Application;
 import android.location.LocationManager;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import com.poc.fb.fb_poc.db.LocationDatabase;
+import com.poc.fb.fb_poc.location.LocationModule;
+import com.poc.fb.fb_poc.logic.ILocationController;
 
-import dagger.Component;
+import javax.inject.Inject;
 
 /**
  * Created by oferschonberger on 03/03/17.
@@ -14,28 +15,28 @@ import dagger.Component;
 
 public class FbApplication extends Application {
 
-    @Singleton
-    @Component(modules = AndroidModule.class)
 
-    public interface ApplicationComponent {
-        void inject(FbApplication application);
-    }
+    @Inject
+    LocationManager locationManager;
 
-    @Inject  LocationManager locationManager; // for some reason.
+    @Inject
+    ILocationController locationController;
+
+    @Inject
+    LocationDatabase database;
+
 
     private ApplicationComponent component;
 
     @Override public void onCreate() {
         super.onCreate();
-        component = DaggerFbApplication_ApplicationComponent.builder()
-                .androidModule(new AndroidModule(this))
+        component = DaggerApplicationComponent.builder().
+                locationModule(new LocationModule(this))
                 .build();
-        component().inject(this); // As of now, LocationManager should be injected into this.
+        component().inject(this);
     }
 
     public ApplicationComponent component() {
         return component;
     }
 }
-
-

@@ -7,6 +7,8 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.poc.fb.fb_poc.FbApplication;
+
 import javax.inject.Inject;
 
 import rx.Subscriber;
@@ -21,10 +23,11 @@ public class NativeLocationProvider {
 
     @Inject LocationManager locationManager;
 
-    public rx.Observable<Location> getGpsLocationsObservable(Context context, final long minTime, final float minDistance) {
+    public NativeLocationProvider(FbApplication application) {
+        application.component().inject(this);
+    }
 
-//        // Acquire a reference to the system Location Manager
-//        final LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+    public rx.Observable<Location> getGpsLocationsObservable(final long minTime, final float minDistance) {
 
         rx.Observable<Location> locationObservable = rx.Observable.create(new rx.Observable.OnSubscribe<Location>() {
 

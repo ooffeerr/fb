@@ -1,4 +1,4 @@
-package com.poc.fb.fb_poc.location;
+package com.poc.fb.fb_poc.db;
 
 import android.os.Bundle;
 
