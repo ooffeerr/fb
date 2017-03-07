@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
+import com.google.android.gms.maps.SupportMapFragment;
 import com.poc.fb.fb_poc.ui.LocationFragment;
 import com.poc.fb.fb_poc.ui.NativeLocationsFragment;
 
@@ -148,6 +149,8 @@ public class MainActivity extends AppCompatActivity {
                     return new LocationFragment();
                 case 1:
                     return new NativeLocationsFragment();
+                case 2:
+                    return new SupportMapFragment();
             }
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
@@ -156,19 +159,21 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            // Show 4 total pages.
+            return 4;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "Google locations API";
                 case 1:
-                    return "SECTION 2";
+                    return "Native GPS locations";
                 case 2:
-                    return "SECTION 3";
+                    return "Map";
+                case 3:
+                    return "Oh, hello there!";
             }
             return null;
         }
