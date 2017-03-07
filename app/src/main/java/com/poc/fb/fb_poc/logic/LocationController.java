@@ -4,6 +4,7 @@ import android.location.Location;
 import android.util.Log;
 
 import com.poc.fb.fb_poc.db.LocationDatabase;
+import com.poc.fb.fb_poc.location.ILocationUpdateUIListener;
 import com.poc.fb.fb_poc.location.NativeLocationProvider;
 
 import java.util.concurrent.TimeUnit;
@@ -35,6 +36,13 @@ public class LocationController implements ILocationController {
     NativeLocationProvider nativeLocationProvider;
 
     @Override
+    public void setListener(ILocationUpdateUIListener listener) {
+        this.listener = listener;
+    }
+
+    ILocationUpdateUIListener listener;
+
+    @Override
     public void startTrackingLocations() {
         Log.d(TAG, "startTrackingLocations() called");
 
@@ -54,6 +62,9 @@ public class LocationController implements ILocationController {
             public void onNext(Location location) {
                 Log.d(TAG, "onNext() called with: location = [" + location + "]");
                 database.addLocation(location);
+                if (listener != null) {
+                    listener.updateDisplayWithLocation(location);
+                }
             }
         });
     }

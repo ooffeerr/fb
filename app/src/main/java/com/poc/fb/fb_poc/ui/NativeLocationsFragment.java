@@ -1,5 +1,6 @@
 package com.poc.fb.fb_poc.ui;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.poc.fb.fb_poc.FbApplication;
 import com.poc.fb.fb_poc.R;
+import com.poc.fb.fb_poc.location.ILocationUpdateUIListener;
 import com.poc.fb.fb_poc.logic.ILocationController;
 
 import javax.inject.Inject;
@@ -21,7 +23,7 @@ import butterknife.ButterKnife;
 /**
  * Native locations fragment
  */
-public class NativeLocationsFragment extends Fragment {
+public class NativeLocationsFragment extends Fragment implements ILocationUpdateUIListener {
 
     private static final String TAG = "NativeLocationsFragment";
     @BindView(R.id.lastKnownLocationTextView) TextView lastKnownLocationTextView;
@@ -30,6 +32,7 @@ public class NativeLocationsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ((FbApplication) getActivity().getApplication()).component().inject(this);
+        controller.setListener(this);
     }
 
     @Inject ILocationController controller;
@@ -48,5 +51,10 @@ public class NativeLocationsFragment extends Fragment {
         super.onStart();
         Log.d(TAG, "onStart() called");
         controller.startTrackingLocations();
+    }
+
+    @Override
+    public void updateDisplayWithLocation(Location location) {
+        lastKnownLocationTextView.setText(location.toString());
     }
 }

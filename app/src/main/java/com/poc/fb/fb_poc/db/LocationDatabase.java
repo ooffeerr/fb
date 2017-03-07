@@ -68,6 +68,10 @@ public class LocationDatabase extends SquidDatabase {
                 .setLatitude(location.getLatitude())
                 .setLongitude(location.getLongitude())
 //                .setFieldsMask(location.has)
+                .setProvider(location.getProvider())
+                .setElapsedRealtimeNanos(location.getElapsedRealtimeNanos())
+                .setTime(location.getTime())
+                .setAccuracy((double) location.getAccuracy())
                 .setProvider(location.getProvider());
 
 
