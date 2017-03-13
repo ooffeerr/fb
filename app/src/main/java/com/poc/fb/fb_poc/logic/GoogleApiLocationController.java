@@ -43,8 +43,8 @@ public class GoogleApiLocationController {
 
     final LocationRequest locationRequest = LocationRequest.create()
             .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-            .setNumUpdates(5)
-            .setInterval(100);
+
+            .setInterval(1000);
 
     public Observable<Location> getUpdatesObservable() {
 

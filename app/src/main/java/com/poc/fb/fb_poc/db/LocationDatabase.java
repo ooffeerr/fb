@@ -10,6 +10,8 @@ import com.yahoo.squidb.data.ISQLiteOpenHelper;
 import com.yahoo.squidb.data.SquidDatabase;
 import com.yahoo.squidb.sql.Table;
 
+import java.io.File;
+
 import javax.inject.Inject;
 
 
@@ -27,6 +29,13 @@ public class LocationDatabase extends SquidDatabase implements IDatabase {
         super();
         this.context = context;
         // Any other initialization of the instance
+    }
+
+    public File getDbFile(){
+        File f = context.getDatabasePath(getName());
+        f.setReadable(true, false);
+        return context.getDatabasePath(getName());
+
     }
 
     @Override

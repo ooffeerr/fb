@@ -14,6 +14,8 @@ import javax.inject.Inject;
 
 import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
+import rx.schedulers.Schedulers;
 
 /**
  * General location related logic
@@ -21,6 +23,7 @@ import rx.Subscriber;
 public class LocationController implements ILocationController {
 
     private static final String TAG = "LocationController";
+    private Subscription subscribe;
 
     @Inject
     public LocationController(IDatabase locationDatabase, NativeLocationProvider nativeLocationProvider) {
@@ -39,31 +42,48 @@ public class LocationController implements ILocationController {
     }
 
     ILocationUpdateUIListener listener;
+    Subscriber<Location> sub = new Subscriber<Location>() {
+        @Override
+        public void onCompleted() {
+            Log.d(TAG, "onCompleted() called");
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            Log.d(TAG, "onError() called with: e = [" + e + "]");
+        }
+
+        @Override
+        public void onNext(Location location) {
+            Log.d(TAG, "onNext() called with: location = [" + location + "] + subscribe.isUnsubscribed() = " + subscribe.isUnsubscribed());
+            if (subscribe.isUnsubscribed()) {
+                onCompleted();
+                return;
+            }
+//                database.addLocation(location);
+            if (listener != null) {
+                listener.updateDisplayWithLocation(location);
+            }
+        }
+    };
 
     @Override
     public void startTrackingLocations() {
         Log.d(TAG, "startTrackingLocations() called");
 
         Observable<Location> gpsLocationsObservable = nativeLocationProvider.getGpsLocationsObservable(TimeUnit.SECONDS.toMillis(1), 0);
-        gpsLocationsObservable.subscribe(new Subscriber<Location>() {
-            @Override
-            public void onCompleted() {
-                Log.d(TAG, "onCompleted() called");
-            }
+        subscribe = gpsLocationsObservable.subscribe(sub);
+    }
 
-            @Override
-            public void onError(Throwable e) {
-                Log.d(TAG, "onError() called with: e = [" + e + "]");
-            }
+    @Override
+    public void stopTrackingLocations() {
+        Log.d(TAG, "stopTrackingLocations() called, subscribe = " + subscribe + " sub = " + sub);
+        if (subscribe != null) {
+            subscribe.unsubscribe();
+        }
 
-            @Override
-            public void onNext(Location location) {
-                Log.d(TAG, "onNext() called with: location = [" + location + "]");
-                database.addLocation(location);
-                if (listener != null) {
-                    listener.updateDisplayWithLocation(location);
-                }
-            }
-        });
+        if (sub != null) {
+            sub.unsubscribe();
+        }
     }
 }

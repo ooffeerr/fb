@@ -11,7 +11,7 @@ public class LocationToStringFunc implements Func1<Location, String> {
     @Override
     public String call(Location location) {
         if (location != null) {
-            String locationStr = location.getLatitude() + " " + location.getLongitude() + " (" + location.getAccuracy() + ")";
+            String locationStr = location.getLatitude() + " " + location.getLongitude() + " (accuracy: " + location.getAccuracy() + ")";
             Log.d(TAG, "location = " + locationStr);
             return locationStr;
         }

@@ -20,8 +20,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.SupportMapFragment;
+import com.poc.fb.fb_poc.db.IDatabase;
+import com.poc.fb.fb_poc.db.LocationDatabase;
 import com.poc.fb.fb_poc.ui.LocationFragment;
 import com.poc.fb.fb_poc.ui.NativeLocationsFragment;
+import com.poc.fb.fb_poc.utils.SendEmail;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     @BindView(R.id.container) ViewPager mViewPager;
+    private LocationDatabase database;
+    private SendEmail sendEmail;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,14 +63,18 @@ public class MainActivity extends AppCompatActivity {
 
         // Set up the ViewPager with the sections adapter.
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
+        database = new LocationDatabase(getApplicationContext());
+        sendEmail = new SendEmail();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Preparing locations DB", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+                sendEmail.send(database.getDbFile(), MainActivity.this);
+                
             }
         });
 

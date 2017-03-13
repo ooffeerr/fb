@@ -11,4 +11,5 @@ public interface ILocationController {
 
     void startTrackingLocations();
 
+    void stopTrackingLocations();
 }

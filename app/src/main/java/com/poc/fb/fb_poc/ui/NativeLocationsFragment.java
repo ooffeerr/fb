@@ -54,6 +54,14 @@ public class NativeLocationsFragment extends Fragment implements ILocationUpdate
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        if (controller != null) {
+            controller.stopTrackingLocations();
+        }
+    }
+
+    @Override
     public void updateDisplayWithLocation(Location location) {
         lastKnownLocationTextView.setText(location.toString());
     }

@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.google.android.gms.location.ActivityRecognitionResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.poc.fb.fb_poc.R;
+import com.poc.fb.fb_poc.db.IDatabase;
+import com.poc.fb.fb_poc.db.LocationDatabase;
 import com.poc.fb.fb_poc.logic.GoogleApiLocationController;
 import com.poc.fb.fb_poc.utils.DetectedActivityToString;
 import com.poc.fb.fb_poc.utils.DisplayTextOnViewAction;
@@ -56,6 +58,14 @@ public class LocationFragment extends Fragment{
     private Subscription activitySubscription;
     private rx.Observable<String> addressObservable;
     private GoogleApiLocationController locationController;
+    private IDatabase database;
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        database = new LocationDatabase(getActivity().getApplicationContext());
+
+    }
 
     @Nullable
     @Override
@@ -89,6 +99,15 @@ public class LocationFragment extends Fragment{
                 .subscribe(new DisplayTextOnViewAction(lastKnownLocationView), new ErrorHandler());
 
         updatableLocationSubscription = locationUpdatesObservable
+                .map(new Func1<Location,
+                        Location>() {
+                    @Override
+                    public Location call(Location location) {
+                        Log.d(TAG, "persisting location " + location);
+                        database.addLocation(location);
+                        return location;
+                    }
+                })
                 .map(new LocationToStringFunc())
                 .map(new Func1<String, String>() {
                     int count = 0;
