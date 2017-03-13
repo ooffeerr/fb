@@ -11,13 +11,14 @@ import com.poc.fb.fb_poc.FbApplication;
 
 import javax.inject.Inject;
 
+import rx.Observable;
 import rx.Subscriber;
 
 /**
  * Creates a native Android locations observable for locations consumption.
  */
 
-public class NativeLocationProvider {
+public class NativeLocationProvider implements ILocationProvider {
 
     public static final String TAG = "LocationObservable";
 
@@ -27,7 +28,8 @@ public class NativeLocationProvider {
         application.component().inject(this);
     }
 
-    public rx.Observable<Location> getGpsLocationsObservable(final long minTime, final float minDistance) {
+    @Override
+    public Observable<Location> getGpsLocationsObservable(final long minTime, final float minDistance) {
 
         rx.Observable<Location> locationObservable = rx.Observable.create(new rx.Observable.OnSubscribe<Location>() {
 

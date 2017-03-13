@@ -16,12 +16,16 @@ import android.widget.Toast;
 
 import com.google.android.gms.location.ActivityRecognitionResult;
 import com.google.android.gms.location.LocationSettingsStates;
+import com.poc.fb.fb_poc.DaggerApplicationComponent;
+import com.poc.fb.fb_poc.FbApplication;
 import com.poc.fb.fb_poc.R;
 import com.poc.fb.fb_poc.logic.GoogleApiLocationController;
 import com.poc.fb.fb_poc.utils.DetectedActivityToString;
 import com.poc.fb.fb_poc.utils.DisplayTextOnViewAction;
 import com.poc.fb.fb_poc.utils.LocationToStringFunc;
 import com.poc.fb.fb_poc.utils.ToMostProbableActivity;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,7 +59,13 @@ public class LocationFragment extends Fragment{
     private Subscription addressSubscription;
     private Subscription activitySubscription;
     private rx.Observable<String> addressObservable;
-    private GoogleApiLocationController locationController;
+    @Inject GoogleApiLocationController locationController;
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        ((FbApplication) getActivity().getApplication()).component().inject(this);
+    }
 
     @Nullable
     @Override
@@ -65,7 +75,6 @@ public class LocationFragment extends Fragment{
         View view = inflater.inflate(R.layout.location_fragment, null);
         ButterKnife.bind(this, view);
 
-        locationController = new GoogleApiLocationController(getActivity());
         lastKnownLocationObservable = locationController.getLastKnownLocation();
 
         locationUpdatesObservable = locationController.getUpdatesObservable();
