@@ -19,10 +19,9 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
-import com.google.android.gms.maps.SupportMapFragment;
-import com.poc.fb.fb_poc.db.IDatabase;
 import com.poc.fb.fb_poc.db.LocationDatabase;
 import com.poc.fb.fb_poc.ui.LocationFragment;
+import com.poc.fb.fb_poc.ui.MapWrapperFragment;
 import com.poc.fb.fb_poc.ui.NativeLocationsFragment;
 import com.poc.fb.fb_poc.utils.SendEmail;
 
@@ -159,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                     return new NativeLocationsFragment();
                 case 2:
-                    return new SupportMapFragment();
+                    return new MapWrapperFragment();
             }
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
