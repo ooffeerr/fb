@@ -94,9 +94,9 @@ public class LocationFragment extends Fragment{
 
 //    @Override
     protected void onLocationPermissionGranted() {
-        lastKnownLocationSubscription = lastKnownLocationObservable
-                .map(new LocationToStringFunc())
-                .subscribe(new DisplayTextOnViewAction(lastKnownLocationView), new ErrorHandler());
+//        lastKnownLocationSubscription = lastKnownLocationObservable
+//                .map(new LocationToStringFunc())
+//                .subscribe(new DisplayTextOnViewAction(lastKnownLocationView), new ErrorHandler());
 
         updatableLocationSubscription = locationUpdatesObservable
                 .map(new Func1<Location,
@@ -109,14 +109,14 @@ public class LocationFragment extends Fragment{
                     }
                 })
                 .map(new LocationToStringFunc())
-                .map(new Func1<String, String>() {
-                    int count = 0;
-
-                    @Override
-                    public String call(String s) {
-                        return s + " " + count++;
-                    }
-                })
+//                .map(new Func1<String, String>() {
+//                    int count = 0;
+//
+//                    @Override
+//                    public String call(String s) {
+//                        return s + " " + count++;
+//                    }
+//                })
                 .subscribe(new DisplayTextOnViewAction(updatableLocationView), new ErrorHandler());
 
 
@@ -141,7 +141,7 @@ public class LocationFragment extends Fragment{
         super.onStop();
         unsubscribe(updatableLocationSubscription);
         unsubscribe(addressSubscription);
-        unsubscribe(lastKnownLocationSubscription);
+//        unsubscribe(lastKnownLocationSubscription);
         unsubscribe(activitySubscription);
     }
 

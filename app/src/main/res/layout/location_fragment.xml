@@ -15,12 +15,14 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:text="Last location"
-            tools:ignore="HardcodedText" />
+            tools:ignore="HardcodedText"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/last_known_location_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             tools:text="Sample location" />
 
         <TextView

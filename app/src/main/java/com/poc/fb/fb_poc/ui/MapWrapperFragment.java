@@ -12,6 +12,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.poc.fb.fb_poc.R;
+import com.poc.fb.fb_poc.logic.IMapViewController;
 
 import butterknife.ButterKnife;
 
@@ -23,14 +24,7 @@ public class MapWrapperFragment extends Fragment implements
         OnMapReadyCallback {
     private static final String TAG = "MapWrapperFragment";
     private GoogleMap mMap;
-//    SupportMapFragment
-
-//    @Override
-//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-//        super.onActivityCreated(savedInstanceState);
-//        ((FbApplication) getActivity().getApplication()).component().inject(this);
-//        controller.setListener(this);
-//    }
+    private IMapViewController mapViewController;
 
     @Nullable
     @Override
@@ -42,7 +36,6 @@ public class MapWrapperFragment extends Fragment implements
         mapFragment.getMapAsync(this);
         return view;
     }
-
 
     @Override
     public boolean onMyLocationButtonClick() {
