@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,13 +25,27 @@ public class MapWrapperFragment extends Fragment implements
         OnMapReadyCallback {
     private static final String TAG = "MapWrapperFragment";
     private GoogleMap mMap;
+
+    private static View view;
+
     private IMapViewController mapViewController;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.map_wrapper_fragment, null);
+
+        if (view != null) {
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if (parent != null)
+                parent.removeView(view);
+        }
+        try {
+            view = inflater.inflate(R.layout.map_wrapper_fragment, container, false);
+        } catch (InflateException e) {
+            /* map is already there, just return view as it is */
+        }
         ButterKnife.bind(this, view);
+
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
